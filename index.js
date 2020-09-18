@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.static("build"));
 app.use(express.json());
 
-morgan.token("requestBody", (req, res) => {
+morgan.token("requestBody", req => {
   if (req.method === "POST" || req.method === "PUT") {
     return JSON.stringify(req.body);
   } else {
@@ -78,7 +78,7 @@ app.put("/api/contacts/:id", (req, res, next) => {
 
 app.delete("/api/contacts/:id", (req, res, next) => {
   Contact.findByIdAndRemove(req.params.id)
-    .then(result => res.status(204).end())
+    .then(() => res.status(204).end())
     .catch(error => next(error));
 });
 
